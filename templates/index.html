@@ -304,7 +304,7 @@ CodeVerseHub is completely free, offering a seamless coding experience for devel
             const code = document.getElementById('code').value;
             const language = document.getElementById('language').value;
 
-            const response = await fetch('http://localhost:5000/execute', {
+            const response = await fetch('https://codeversehub.onrender.com/execute', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

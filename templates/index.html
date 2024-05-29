@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeVerseHub</title>
+    <style>
+        body {
+            font-family: "Fira Code", monospace;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #1e1e1e;
+            color: #d4d4d4;
+            overflow: hidden;
+        }
+
+        .container {
+            display: flex;
+            width: 80%;
+            height: 80%;
+            border: 2px solid #3c3c3c;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .editor,
+        .output {
+            width: 50%;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .editor {
+            background-color: #1e1e1e;
+        }
+
+        .output {
+            background-color: #252526;
+        }
+
+        h1 {
+            margin-top: 0;
+            color: #ffffff;
+        }
+
+        textarea {
+            width: 100%;
+            height: calc(100% - 100px);
+            margin-bottom: 10px;
+            padding: 10px;
+            box-sizing: border-box;
+            font-family: "Fira Code", monospace;
+            font-size: 16px;
+            color: #d4d4d4;
+            background-color: #1e1e1e;
+            border: 1px solid #3c3c3c;
+            border-radius: 4px;
+            resize: none;
+        }
+
+        select,
+        button {
+            padding: 10px;
+            margin-bottom: 10px;
+            font-size: 16px;
+            color: #d4d4d4;
+            background-color: #3c3c3c;
+            border: 1px solid #3c3c3c;
+            border-radius: 4px;
+        }
+
+        button {
+            background: #007acc;
+            color: white;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background: #005a9e;
+        }
+
+        pre {
+            width: 100%;
+            height: calc(100% - 20px);
+            margin: 0;
+            padding: 10px;
+            box-sizing: border-box;
+            background: #1e1e1e;
+            color: #d4d4d4;
+            border: 1px solid #3c3c3c;
+            border-radius: 4px;
+            overflow: auto;
+        }
+
+        @media (max-width: 1024px) {
+            .container {
+                display: none;
+            }
+
+            body::before {
+                content: "This application is only available on desktop devices.";
+                color: #ffffff;
+                font-size: 24px;
+                text-align: center;
+                padding: 20px;
+                border: 2px solid #3c3c3c;
+                border-radius: 10px;
+            }
+        }
+
+        pre {
+            width: 100%;
+            height: calc(100% - 20px);
+            margin: 0;
+            padding: 10px;
+            box-sizing: border-box;
+            background: #1e1e1e;
+            color: #d4d4d4;
+            border: 1px solid #3c3c3c;
+            border-radius: 4px;
+            overflow: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #007acc #1e1e1e;
+        }
+
+        pre::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        pre::-webkit-scrollbar-track {
+            background: #1e1e1e;
+        }
+
+        pre::-webkit-scrollbar-thumb {
+            background-color: #007acc;
+            border-radius: 6px;
+            border: 3px solid #1e1e1e;
+        }
+
+        textarea {
+            width: 100%;
+            height: calc(100% - 100px);
+            margin-bottom: 10px;
+            padding: 10px;
+            box-sizing: border-box;
+            font-family: "Fira Code", monospace;
+            font-size: 16px;
+            color: #d4d4d4;
+            background-color: #1e1e1e;
+            border: 1px solid #3c3c3c;
+            border-radius: 4px;
+            resize: none;
+            overflow: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #007acc #1e1e1e;
+        }
+
+        textarea::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        textarea::-webkit-scrollbar-track {
+            background: #1e1e1e;
+        }
+
+        textarea::-webkit-scrollbar-thumb {
+            background-color: #007acc;
+            border-radius: 6px;
+            border: 3px solid #1e1e1e;
+        }
+
+        body {
+            font-family: "Fira Code", monospace;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #1e1e1e;
+            color: #d4d4d4;
+            overflow: hidden;
+        }
+
+        body::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        body::-webkit-scrollbar-track {
+            background: #1e1e1e;
+        }
+
+        body::-webkit-scrollbar-thumb {
+            background-color: #007acc;
+            border-radius: 6px;
+            border: 3px solid #1e1e1e;
+        }
+
+        body::-webkit-scrollbar-thumb:hover {
+            background: #005a9e;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="editor">
+            <h1>CodeVerseHub</h1>
+            <select id="language">
+                <option value="assembly">Assembly</option>
+                <option value="ada">Ada</option>
+                <option value="algol">ALGOL</option>
+                <option value="bash">Bash</option>
+                <option value="basic">BASIC</option>
+                <option value="c">C</option>
+                <option value="csharp">C#</option>
+                <option value="cpp">C++</option>
+                <option value="cobol">COBOL</option>
+                <option value="crystal">Crystal</option>
+                <option value="dart">Dart</option>
+                <option value="delphi">Delphi/Object Pascal</option>
+                <option value="d">D</option>
+                <option value="elixir">Elixir</option>
+                <option value="elm">Elm</option>
+                <option value="erlang">Erlang</option>
+                <option value="fsharp">F#</option>
+                <option value="forth">Forth</option>
+                <option value="fortran">Fortran</option>
+                <option value="go">Go</option>
+                <option value="groovy">Groovy</option>
+                <option value="haskell">Haskell</option>
+                <option value="html">HTML</option>
+                <option value="idris">Idris</option>
+                <option value="io">Io</option>
+                <option value="java">Java</option>
+                <option value="javascript">JavaScript</option>
+                <option value="julia">Julia</option>
+                <option value="kotlin">Kotlin</option>
+                <option value="lisp">Lisp</option>
+                <option value="lua">Lua</option>
+                <option value="matlab">MATLAB</option>
+                <option value="nim">Nim</option>
+                <option value="objc">Objective-C</option>
+                <option value="ocaml">OCaml</option>
+                <option value="pascal">Pascal</option>
+                <option value="perl">Perl</option>
+                <option value="php">PHP</option>
+                <option value="prolog">Prolog</option>
+                <option value="python">Python</option>
+                <option value="r">R</option>
+                <option value="ruby">Ruby</option>
+                <option value="rust">Rust</option>
+                <option value="scala">Scala</option>
+                <option value="scheme">Scheme</option>
+                <option value="scratch">Scratch</option>
+                <option value="shell">Shell Script</option>
+                <option value="smalltalk">Smalltalk</option>
+                <option value="solidity">Solidity</option>
+                <option value="sql">SQL</option>
+                <option value="swift">Swift</option>
+                <option value="tcl">Tcl</option>
+                <option value="typescript">TypeScript</option>
+                <option value="vhdl">VHDL</option>
+                <option value="vbnet">Visual Basic .NET</option>
+                <option value="webassembly">WebAssembly</option>
+                <option value="zig">Zig</option>
+                <option value="css">CSS</option>
+            </select>
+            <textarea id="code" placeholder="Write your code here...
+
+About CodeVerseHub:
+CodeVerseHub lets you write and execute code in multiple programming languages, much like VS Code and Replit.
+
+How to Use:
+1. Select your preferred language from the dropdown menu.
+2. Write your code in this editor.
+3. Click 'Run Code' to execute.
+
+Note:
+Ensure the necessary compilers or interpreters for your chosen language are installed on your system.
+
+Free to Use:
+CodeVerseHub is completely free, offering a seamless coding experience for developers of all levels.
+"></textarea>
+
+
+            <button onclick="runCode()">Run Code</button>
+        </div>
+        <div class="output">
+            <h1>Output</h1>
+            <pre id="output"></pre>
+        </div>
+    </div>
+    <script>
+        async function runCode() {
+            const code = document.getElementById('code').value;
+            const language = document.getElementById('language').value;
+
+            const response = await fetch('http://localhost:5000/execute', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ code, language })
+            });
+
+            const result = await response.json();
+            document.getElementById('output').textContent = result.output;
+        }
+    </script>
+</body>
+
+</html>
